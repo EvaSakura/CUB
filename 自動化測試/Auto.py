@@ -182,10 +182,5 @@ if (driver.find_element(By.XPATH, "/html/body/div[1]/header/div/div[3]/div/div[2
     print("停發卡:", len(StopCardList))
     print("==========")
 
-time.sleep(2)
+# time.sleep(2)
 driver.close()
-
-"""
-/html/body/div/main/article/section[6]/div/div[2]/div/div[2]/span[1]
-
-"""

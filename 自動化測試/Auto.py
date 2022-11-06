@@ -36,11 +36,11 @@ def Get_Image(driver, xPath, ImageName):
 
 
 options = webdriver.ChromeOptions()
+options.add_argument("--start-maximized")
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
 options.add_experimental_option('useAutomationExtension', False)
 options.add_experimental_option("prefs", {
                                 "profile.password_manager_enabled": False, "credentials_enable_service": False})
-
 # 1. 使用Chrome App到國泰世華銀行官網(https://www.cathaybk.com.tw/cathaybk/)並將畫面截圖。
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 driver.get("https://www.cathaybk.com.tw/cathaybk/")
@@ -59,6 +59,8 @@ finally:
 button = driver.find_element(
     By.XPATH, "/html/body/div[1]/header/div/div[3]/div/div[2]/div/div/div[1]/div[1]")
 button.click()
+element = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.XPATH, "//div[@style='display: block;']")))
 count = 0
 if (driver.find_element(By.XPATH, "/html/body/div[1]/header/div/div[3]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div[2]")):
     Get_Image(
@@ -90,26 +92,100 @@ CardInfobutton.click()
 # 捜尋"停發卡"component
 element = WebDriverWait(driver, 20).until(
     EC.presence_of_element_located((By.XPATH, "/html/body/div/main/article/section[6]/div")))
+StopCardList = []
+if (driver.find_element(By.XPATH, "/html/body/div[1]/header/div/div[3]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div[2]")):
+    Get_Image(
+        driver, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[1]", "CUBStopCard1.png")
+    StopCard = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[1]")
+    StopList = StopCard.text.split("\n")
+    for CardList in StopList:
+        if "停發" in CardList:
+            StopCardList.append(CardList)
 
+    Get_Image(
+        driver, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[2]", "CUBStopCard2.png")
+    StopCard = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[2]")
+    StopList = StopCard.text.split("\n")
+    for CardList in StopList:
+        if "停發" in CardList:
+            StopCardList.append(CardList)
 
-time.sleep(20)
+    Get_Image(
+        driver, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[3]", "CUBStopCard3.png")
+    StopCard = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[3]")
+    StopList = StopCard.text.split("\n")
+    for CardList in StopList:
+        if "停發" in CardList:
+            StopCardList.append(CardList)
+
+    StopCardbutton = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[4]")
+    # Go to slide 2
+    StopCardbutton.click()
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[@class='swiper-pagination-bullet swiper-pagination-bullet-active']")))
+    # Go to slide 3
+    StopCardbutton.click()
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[@class='swiper-pagination-bullet swiper-pagination-bullet-active']")))
+    # Go to slide 4
+    StopCardbutton.click()
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[@class='swiper-pagination-bullet swiper-pagination-bullet-active']")))
+
+    Get_Image(
+        driver, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[4]", "CUBStopCard4.png")
+    StopCard = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[4]")
+    StopList = StopCard.text.split("\n")
+    for CardList in StopList:
+        if "停發" in CardList:
+            StopCardList.append(CardList)
+
+    Get_Image(
+        driver, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[5]", "CUBStopCard5.png")
+    StopCard = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[5]")
+    StopList = StopCard.text.split("\n")
+    for CardList in StopList:
+        if "停發" in CardList:
+            StopCardList.append(CardList)
+
+    Get_Image(
+        driver, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[6]", "CUBStopCard6.png")
+    StopCard = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[6]")
+    StopList = StopCard.text.split("\n")
+    for CardList in StopList:
+        if "停發" in CardList:
+            StopCardList.append(CardList)
+
+    # Go to slide 5
+    StopCardbutton.click()
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[@class='swiper-pagination-bullet swiper-pagination-bullet-active']")))
+    Get_Image(
+        driver, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[7]", "CUBStopCard7.png")
+    StopCard = driver.find_element(
+        By.XPATH, "/html/body/div/main/article/section[6]/div/div[2]/div/div[1]/div[7]")
+    StopList = StopCard.text.split("\n")
+    for CardList in StopList:
+        if "停發" in CardList:
+            StopCardList.append(CardList)
+
+    StopCardList = list(dict.fromkeys(StopCardList))
+    print("==========")
+    print(StopCardList)
+    print("停發卡:", len(StopCardList))
+    print("==========")
+
+time.sleep(2)
 driver.close()
 
 """
-<div class="cubre-o-indexKv__pic" data-animate="fade-up">
-               <img src="/cathaybk/-/media/ae1a413b3f234a2c9a5039de1d33ee7d.png?iar=0&amp;sc_lang=en&amp;hash=F6AD3B34EF8150495ECC3765582E6546" class="cubre-o-indexKv__img -pc" alt="" id="img_AE1A413B3F234A2C9A5039DE1D33EE7D">
-                <img src="/cathaybk/-/media/590e8e5d13f5445c9ec26d399660a341.png?iar=0&amp;sc_lang=en&amp;hash=79145B9DD382CA881E85B9D7665E20CC" class="cubre-o-indexKv__img -mb" alt="" id="img_590E8E5D13F5445C9EC26D399660A341">
-            </div>
-
-    -webkit-text-size-adjust: 100%;
-    --vh: 12.97px;
-    font-family: Arial,Helvetica,Verdana,'Microsoft JhengHei',PingFangTC,sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-    visibility: visible;
-    pointer-events: visible;
-    flex: 0 0 auto;
-    width: 130px;
+/html/body/div/main/article/section[6]/div/div[2]/div/div[2]/span[1]
 
 """
